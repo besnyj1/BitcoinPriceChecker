@@ -1,0 +1,36 @@
+import requests
+import time
+
+def ticker_function():
+    def main_function():
+
+        bitcoin_ticker2()
+
+    def bitcoin_ticker():
+
+        response = requests.get('https://api.coindesk.com/v1/bpi/currentprice/BTC.json')
+        data = response.json()
+        return data["bpi"]["USD"]["rate"]
+
+    def bitcoin_ticker2():
+        original = bitcoin_ticker()
+        time.sleep(10)
+
+        response = requests.get('https://api.coindesk.com/v1/bpi/currentprice/BTC.json')
+        data_1 = response.json()
+        comp = (data_1["bpi"]["USD"]["rate"])
+
+        if comp > original:
+            print("Price went up to " + str(comp))
+            main_function()
+        elif comp < original:
+            print("Price went down to " + str(comp))
+            main_function()
+        elif comp == original:
+            print('Nothing happened.')
+            time.sleep(0.5)
+            main_function()
+
+    return bitcoin_ticker2()
+
+ticker_function()
